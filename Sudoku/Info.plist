@@ -43,5 +43,16 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>ATSApplicationFontsPath</key>
+	<string>Sudoku/Resources</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Dosis-Regular.ttf</string>
+		<string>Dosis-SemiBold.ttf</string>
+		<string>Dosis-Bold.ttf</string>
+		<string>Brandon_bld.otf</string>
+		<string>Brandon_light.otf</string>
+		<string>Brandon_med.otf</string>
+	</array>
 </dict>
 </plist>

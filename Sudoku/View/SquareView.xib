@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Brandon_bld.otf">
+            <string>BrandonGrotesque-Bold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SquareView" customModule="Sudoku" customModuleProvider="target">
+            <connections>
+                <outlet property="label" destination="sHx-8l-wiK" id="6sm-Fu-2xC"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sHx-8l-wiK">
+                    <rect key="frame" x="100" y="100" width="400" height="400"/>
+                    <fontDescription key="fontDescription" name="BrandonGrotesque-Bold" family="Brandon Grotesque" pointSize="40"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="sHx-8l-wiK" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="2:3" id="5ma-H9-9In"/>
+                <constraint firstItem="sHx-8l-wiK" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="2:3" id="5vE-Vf-cac"/>
+                <constraint firstItem="sHx-8l-wiK" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Jtk-JR-Wbf"/>
+                <constraint firstItem="sHx-8l-wiK" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="wuu-RL-3vo"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="Qw6-5w-57U" appends="YES" id="So7-Af-nVO"/>
+            </connections>
+            <point key="canvasLocation" x="472" y="350"/>
+        </view>
+        <tapGestureRecognizer id="Qw6-5w-57U">
+            <connections>
+                <action selector="tapGesture:" destination="-1" id="GhO-eC-apM"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+</document>
