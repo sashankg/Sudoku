@@ -5,8 +5,8 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Brandon_bld.otf">
-            <string>BrandonGrotesque-Bold</string>
+        <mutableArray key="Dosis-Bold.ttf">
+            <string>Dosis-Bold</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -22,8 +22,7 @@
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sHx-8l-wiK">
                     <rect key="frame" x="100" y="100" width="400" height="400"/>
-                    <fontDescription key="fontDescription" name="BrandonGrotesque-Bold" family="Brandon Grotesque" pointSize="40"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="Dosis-Bold" family="Dosis" pointSize="40"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>

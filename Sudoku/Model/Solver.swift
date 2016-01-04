@@ -20,15 +20,15 @@ class Solver {
 	{
 		var constraints = [Constraint]()
 		var key = 0
-		for x in 1...9
+		for x in 0..<9
 		{
-			for y in 1...9
+			for y in 0..<9
 			{
 				constraints.append(Constraint(hashValue: key, satisfies: { square in square.x == x && square.y == y}))
 				key += 1
 			}
 		}
-		for x in 1...9
+		for x in 0..<9
 		{
 			for v in 1...9
 			{
@@ -36,7 +36,7 @@ class Solver {
 				key += 1
 			}
 		}
-		for y in 1...9
+		for y in 0..<9
 		{
 			for v in 1...9
 			{
@@ -44,13 +44,13 @@ class Solver {
 				key += 1
 			}
 		}
-		for n in 0...8
+		for n in 0..<9
 		{
 			for v in 1...9
 			{
 				constraints.append(Constraint(hashValue: key, satisfies: { square in
-					let a = 3 * ((square.y - 1) / 3)
-					let b = (square.x - 1) / 3
+					let a = 3 * (square.y / 3)
+					let b = square.x / 3
 					return a + b == n && square.value == v})
 				)
 				key += 1
@@ -62,9 +62,9 @@ class Solver {
 	private func createSquares() -> [Square]
 	{
 		var squares = [Square]()
-		for x in 1...9
+		for x in 0..<9
 		{
-			for y in 1...9
+			for y in 0..<9
 			{
 				for n in 1...9
 				{
@@ -139,14 +139,14 @@ class Solver {
 			{
 				if b[c][r] != 0
 				{
-					board.append(Square(value: b[c][r], x: r+1, y: c+1))
+					board.append(Square(value: b[c][r], x: r, y: c))
 				}
 			}
 		}
 		return board
 	}
 	
-	func createNewGame() -> Puzzle
+	func createNewGame() -> Game
 	{
 		let constraints = createConstraints()
 		let squares = createSquares()
@@ -166,9 +166,9 @@ class Solver {
 		
 		var values = [1, 2, 3, 4, 5, 6, 7, 8, 9].shuffle()
 		var topRow = [Square]()
-		for x in 1...9
+		for x in 0..<9
 		{
-			topRow.append(Square(value: values.removeLast(), x: x, y: 1))
+			topRow.append(Square(value: values.removeLast(), x: x, y: 0))
 		}
 		var removedColsArray = [[[Square]]]()
 		for square in topRow
@@ -184,13 +184,13 @@ class Solver {
 			deselect(square, cols: removedColsArray.removeLast())
 		}
 		
-		var removed: Square!
+		var removedSquares = [Square]()
 		while boardHasUniqueSolution(board)
 		{
-			removed = board.removeAtIndex(Int(arc4random_uniform(UInt32(board.count))))
+			removedSquares.append(board.removeAtIndex(Int(arc4random_uniform(UInt32(board.count)))))
 		}
-		board.append(removed)
-		return Puzzle(puzzle: board, solution: solution)
+		board.append(removedSquares.removeLast())
+		return Game(puzzle: board, solution: removedSquares, playerSquares: [])
 	}
 
 	func solve() -> [Square]?

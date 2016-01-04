@@ -15,14 +15,16 @@ class HomeViewController: UIViewController  {
 	
 	override func viewDidLoad() {
 		gameViewModel = GameViewModel()
-		gameViewModel.generateNewGame()
+		gameViewModel.loadGame()
 	}
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if let destination = segue.destinationViewController as? GameViewController
 		{
-			print(gameViewModel)
 			destination.viewModel = gameViewModel
 		}
+	}
+	@IBAction func linkToWebsite(sender: UIButton) {
+		UIApplication.sharedApplication().openURL(NSURL(string: "http://sashank.ga")!)
 	}
 }

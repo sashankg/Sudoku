@@ -13,6 +13,11 @@ struct Square: Hashable {
 	let value: Int
 	let x, y: Int
 	var hashValue: Int { return (value*100) + x * 10 + y }
+	
+	static func hashToSquare(hash: Int) -> Square
+	{
+		return Square(value: hash/100, x: (hash%100)/10, y: hash%10)
+	}
 }
 
 func == (lhs: Square, rhs: Square) -> Bool

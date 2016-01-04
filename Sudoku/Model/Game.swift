@@ -1,5 +1,5 @@
 //
-//  Puzzle.swift
+//  Game.swift
 //  Sudoku
 //
 //  Created by Sashank Gogula on 12/24/15.
@@ -9,7 +9,7 @@
 import Foundation
 import EDStorage
 
-class Puzzle: NSObject, NSCoding {
+class Game: NSObject, NSCoding {
 	
 	var puzzle: [Square]
 	var solution: [Square]
@@ -22,11 +22,10 @@ class Puzzle: NSObject, NSCoding {
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
-		print((aDecoder.decodeObjectForKey(PuzzlePropertyKeys.puzzleKey) as! NSArray))
-		puzzle = ((aDecoder.decodeObjectForKey(PuzzlePropertyKeys.puzzleKey) as! NSArray) as! [Int]).map { hash in Square(value: hash/100, x: hash%100, y: hash%10) }
-		solution = [] //(aDecoder.decodeObjectForKey(PuzzlePropertyKeys.solutionKey) as! NSArray) as! [Int]).map { hash in Square(value: hash/100, x: hash%100, y: hash%10) }
-		playerSquares = [] //(aDecoder.decodeObjectForKey(PuzzlePropertyKeys.playerSquaresKey) as! NSArray) as! [Int]).map { hash in Square(value: hash/100, x: hash%100, y: hash%10) }
-
+		
+		self.puzzle = ((aDecoder.decodeObjectForKey(PuzzlePropertyKeys.puzzleKey) as! NSArray) as! [Int]).map(Square.hashToSquare)
+		self.solution = ((aDecoder.decodeObjectForKey(PuzzlePropertyKeys.solutionKey) as! NSArray) as! [Int]).map(Square.hashToSquare)
+		self.playerSquares = ((aDecoder.decodeObjectForKey(PuzzlePropertyKeys.playerSquaresKey) as! NSArray) as! [Int]).map(Square.hashToSquare)
 	}
 	
 	func save()
@@ -35,11 +34,11 @@ class Puzzle: NSObject, NSCoding {
 		data.persistToCacheWithExtension("puzzle", success: { url, size in NSUserDefaults.standardUserDefaults().setURL(url, forKey: "puzzle")}, failure: {error in print(error)})
 	}
 
-	init(puzzle: [Square], solution: [Square])
+	init(puzzle: [Square], solution: [Square], playerSquares: [Square])
 	{
 		self.puzzle = puzzle
 		self.solution = solution
-		self.playerSquares = []
+		self.playerSquares = playerSquares
 	}
 	
 	struct PuzzlePropertyKeys {
