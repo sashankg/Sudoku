@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Sudoku by sashankg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Sudoku</h1>
+      <h2 class="project-tagline">Sudoku puzzle generator on iOS written in Swift using Algorithm X</h2>
+      <a href="https://github.com/sashankg/Sudoku" class="btn">View on GitHub</a>
+      <a href="https://github.com/sashankg/Sudoku/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/sashankg/Sudoku/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p><img src="https://raw.githubusercontent.com/sashankg/Sudoku/master/Sudoku/Assets.xcassets/AppIcon.appiconset/ipad1x.png" alt="App Icon"></p>
+
+<h1>
+<a id="sudoku" class="anchor" href="#sudoku" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sudoku</h1>
+
+<p>Sudoku puzzle generator on iOS written in Swift using Algorithm X</p>
+
+<h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>Sudoku was built as a result of experimentation with Swift and <a href="http://www-cs-faculty.stanford.edu/%7Euno/papers/dancing-color.ps.gz">Algorithm X by Donald Knuth</a> to solve a 9x9 Sudoku puzzle. Also, the app uses the MVVM architecture and features animations and custom transitions to augment a user's experience. The app depends on <a href="https://github.com/JensRavens/Interstellar">Interstellar</a> for implementing a reactive paradigm and <a href="https://github.com/thisandagain/storage">EDStorage</a> for simplifying storing data on iOS. </p>
+
+<h2>
+<a id="sudoku-solver" class="anchor" href="#sudoku-solver" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sudoku Solver</h2>
+
+<p>In order to solve a Sudoku board, I used a modified version of Algorithm X to solve an exact cover problem. The idea behind Algorithm X is to select a row that corresponds to a column in a matrix and to remove all the other rows that satisfy columns that are already satisfied by the selected row. This way, the final set of selected squares contains exactly one match for every column. In Sudoku, if the rows are every possible number for every possible square on the board and the columns are each of the Sudoku rules (every number must appear once in every row, column, and 3x3 box), this algorithm will find a solution to the puzzle. Knuth introduces Algorithm X as a use for Dancing Links, where nodes in a doubly linked list can be removed and reinserted in a backtracking search. I quickly found that implementing a doubly linked list in Swift was a hassle, so I tried finding a better way of selecting an deselecting rows. I found an <a href="http://www.cs.mcgill.ca/%7Eaassaf9/python/algorithm_x.html">implementation in Python</a> that used dictionaries instead of linked lists, and thought it would be a better fit for my need.</p>
+
+<p>Here's my solve function: </p>
+
+<div class="highlight highlight-source-swift"><pre><span class="pl-k">func</span> <span class="pl-en">solve</span>() <span class="pl-k">-&gt;</span> [Square]?
+{
+    <span class="pl-k">if</span> x<span class="pl-k">.</span><span class="pl-c1">isEmpty</span>
+    {
+        <span class="pl-k">return</span> []
+    }
+    <span class="pl-k">if</span> x<span class="pl-k">.</span><span class="pl-c1">first</span><span class="pl-k">!.</span><span class="pl-c1">1</span><span class="pl-k">.</span><span class="pl-c1">isEmpty</span>
+    {
+        <span class="pl-k">return</span> <span class="pl-c1">nil</span>
+    }
+
+    <span class="pl-k">let</span> c <span class="pl-k">=</span> x<span class="pl-k">.</span><span class="pl-c1">sort</span> { $<span class="pl-c1">0</span><span class="pl-k">.</span><span class="pl-c1">1</span><span class="pl-k">.</span><span class="pl-c1">count</span> <span class="pl-k">&lt;</span> $<span class="pl-c1">1</span><span class="pl-k">.</span><span class="pl-c1">1</span><span class="pl-k">.</span><span class="pl-c1">count</span> }<span class="pl-k">.</span><span class="pl-c1">first</span><span class="pl-k">!.</span><span class="pl-c1">0</span>
+    <span class="pl-k">for</span> r <span class="pl-k">in</span> x[c]<span class="pl-k">!.</span>shuffle()
+    {
+        <span class="pl-k">let</span> cols <span class="pl-k">=</span> select(r)
+        <span class="pl-k">if</span> <span class="pl-k">let</span> solved <span class="pl-k">=</span> solve()
+        {
+            deselect(r, cols: cols)
+            <span class="pl-k">return</span> [r] <span class="pl-k">+</span> solved
+        }
+        <span class="pl-k">else</span>
+        {
+            deselect(r, cols: cols)
+        }
+    }
+    <span class="pl-k">return</span> <span class="pl-c1">nil</span>
+}</pre></div>
+
+<p>where x is a dictionary with constraints as keys and an array of rows that satisfy the constraint as values.</p>
+
+<h2>
+<a id="mvvm" class="anchor" href="#mvvm" aria-hidden="true"><span class="octicon octicon-link"></span></a>MVVM</h2>
+
+<p>I was using MVVM in my other projects that had to fetch data from the internet because it lended itself well to asynchronous calls. Although I had not planned on using it for this project, I realized that it would come in handy because the solve function was taking too long. So, I moved the solve function to the background thread in the view model and subscribed to it in my view. Interstellar is great because it is very light-weight and gets the job done as far as reactive programming, so I was happy to find a use for it in another project. Interstellar also greatly simplifies multithreading, making it even more useful.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/sashankg/Sudoku">Sudoku</a> is maintained by <a href="https://github.com/sashankg">sashankg</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
