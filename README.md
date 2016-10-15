@@ -2,6 +2,8 @@
 # Sudoku
 Sudoku puzzle generator on iOS written in Swift using Algorithm X
 
+![Screenshot](screenshot1.png)![Screenshot](screenshot2.png)
+
 ## Overview
 Sudoku was built as a result of experimentation with Swift and [Algorithm X by Donald Knuth](http://www-cs-faculty.stanford.edu/~uno/papers/dancing-color.ps.gz) to solve a 9x9 Sudoku puzzle. Also, the app uses the MVVM architecture and features animations and custom transitions to augment a user's experience. The app depends on [Interstellar](https://github.com/JensRavens/Interstellar) for implementing a reactive paradigm and [EDStorage](https://github.com/thisandagain/storage) for simplifying storing data on iOS. 
 
