@@ -2,8 +2,6 @@
 # Sudoku
 Sudoku puzzle generator on iOS written in Swift using Algorithm X
 
-![Screenshot](screenshot1.png)![Screenshot](screenshot2.png)
-
 ## Overview
 Sudoku was built as a result of experimentation with Swift and [Algorithm X by Donald Knuth](http://www-cs-faculty.stanford.edu/~uno/papers/dancing-color.ps.gz) to solve a 9x9 Sudoku puzzle. Also, the app uses the MVVM architecture and features animations and custom transitions to augment a user's experience. The app depends on [Interstellar](https://github.com/JensRavens/Interstellar) for implementing a reactive paradigm and [EDStorage](https://github.com/thisandagain/storage) for simplifying storing data on iOS. 
 
@@ -45,3 +43,5 @@ where x is a dictionary with constraints as keys and an array of rows that satis
 
 ## MVVM
 I was using MVVM in my other projects that had to fetch data from the internet because it lended itself well to asynchronous calls. Although I had not planned on using it for this project, I realized that it would come in handy because the solve function was taking too long. So, I moved the solve function to the background thread in the view model and subscribed to it in my view. Interstellar is great because it is very light-weight and gets the job done as far as reactive programming, so I was happy to find a use for it in another project. Interstellar also greatly simplifies multithreading, making it even more useful.
+
+![Screenshot](screenshot1.png)![Screenshot](screenshot2.png)
